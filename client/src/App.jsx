@@ -3,6 +3,7 @@ import axios from "axios";
 
 
 const API_URL = "https://spesial-kiran-production.up.railway.app/api/time";
+const TARGET_TIMESTAMP = new Date("2026-05-24T00:00:00+07:00").getTime();
 
 const photos = [
   "/photos/foto1.jpeg",
@@ -19,34 +20,31 @@ const photos = [
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [serverData, setServerData] = useState(null);
-  const [currentTime, setCurrentTime] = useState(null);
-  const [photoIndex, setPhotoIndex] = useState(0);
   const [opened, setOpened] = useState(false);
+  const [currentTime, setCurrentTime] = useState(Date.now());
+  const [targetTimestamp, setTargetTimestamp] = useState(TARGET_TIMESTAMP);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
-  useEffect(() => {
-    const startApp = async () => {
-      try {
-        const response = await axios.get(API_URL);
-        const data = response.data;
+ useEffect(() => {
+  const startApp = async () => {
+    try {
+      const response = await axios.get(API_URL);
 
-        setServerData(data);
-        setCurrentTime(new Date(data.now).getTime());
+      setCurrentTime(new Date(response.data.now).getTime());
+      setTargetTimestamp(response.data.targetTimestamp);
+    } catch (error) {
+      console.log("Backend tidak aktif, memakai waktu browser:", error);
+      setCurrentTime(Date.now());
+      setTargetTimestamp(TARGET_TIMESTAMP);
+    }
 
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
-      } catch (error) {
-        console.error("Gagal mengambil waktu server:", error);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  };
 
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
-      }
-    };
-
-    startApp();
-  }, []);
+  startApp();
+}, []);
 
   useEffect(() => {
     if (!currentTime) return;
