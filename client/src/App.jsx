@@ -68,18 +68,11 @@ function App() {
     return <LoadingScreen />;
   }
 
-  if (!serverData || !currentTime) {
-    return (
-      <div className="page center">
-        <h1>Maaf, website belum bisa dibuka.</h1>
-        <p>Waktu server tidak berhasil dimuat.</p>
-      </div>
-    );
-  }
+  
 
   const isBirthdayToday = checkBirthdayDate(currentTime);
 
-  return (
+return (
   <div className="app">
     <FloatingHearts />
 
