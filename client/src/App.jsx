@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 
-const API_URL = "http://localhost:5000/api/time";
+const API_URL = "https://spesial-kiran-production.up.railway.app/api/time";
 
 const photos = [
   "/photos/foto1.jpeg",
