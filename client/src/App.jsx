@@ -25,7 +25,7 @@ function App() {
   const [targetTimestamp, setTargetTimestamp] = useState(TARGET_TIMESTAMP);
   const [photoIndex, setPhotoIndex] = useState(0);
 
- useEffect(() => {
+useEffect(() => {
   const startApp = async () => {
     try {
       const response = await axios.get(API_URL);
